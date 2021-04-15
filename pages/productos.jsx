@@ -1,5 +1,6 @@
 import React from 'react'
 import Layout from '../components/Layout'
+import PrivateRoute from '../components/PrivateRoute'
 
 const productos = () => {
     return (
@@ -11,4 +12,4 @@ const productos = () => {
     )
 }
 
-export default productos
+export default PrivateRoute(productos)

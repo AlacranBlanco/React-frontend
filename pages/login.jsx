@@ -21,8 +21,9 @@ const login = () => {
 
     // Query para validar el usuario
     const [autenticarUsuario] = useMutation(AUTH_USER);
-     // Routing
-     const router = useRouter();
+
+    // Routing
+    const router = useRouter();
 
     // Validación del formulario
     const formik = useFormik({

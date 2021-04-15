@@ -55,6 +55,7 @@ const nuevacuenta = () => {
                         }
                     }
                 });
+                console.log(data);
                 // usuario creado correctamente
                 setMensaje(`Se creo correctamente el Usuario: ${data.nuevoUsuario.nombre}`);
                 setTimeout(() => {
