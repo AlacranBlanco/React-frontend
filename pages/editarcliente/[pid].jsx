@@ -46,7 +46,7 @@ const GET_CLIENTES_USUARIO = gql`
   }
 `;
 
-const EditarCliente = () => {
+const EditarCliente = (props) => {
 
     // State para el mensaje a mostrar al usuario
     const [mensaje, setMensaje] = React.useState(null);
@@ -56,17 +56,31 @@ const EditarCliente = () => {
         
         update(cache,{data : {actualizarCliente}}) {
             const {obtenerCliente} = cache.readQuery({query: GET_CLIENTES_USUARIO});
-        
+            
         cache.writeQuery({
             query: GET_CLIENTES_USUARIO,
             data: { 
-                obtenerCliente : obtenerCliente.map(item => item.id === id ? {...actualizarCliente} : item)
+                obtenerCliente : obtenerCliente.map(item => item.id === id ? actualizarCliente : item)
             }
-        })
-    }});
+        });
 
-    const router = useRouter();
-    const {query: {id}} = router;
+
+        cache.writeQuery({
+            query: GET_CLIENTE_ID,
+            variables: {id},
+            data: {
+                obtenerClientId: actualizarCliente
+            }
+        });
+
+    }
+});
+        const router = useRouter();
+        let {id} = props;
+        console.log(props);
+        
+
+    
 
     const {loading, data} = useQuery(GET_CLIENTE_ID, {
         variables: {
@@ -86,8 +100,7 @@ const EditarCliente = () => {
     if(loading) return <Loading />
     
 
-    const {obtenerClientId} = data;
-
+    let {obtenerClientId} = data;
     const editarCliente = async (values) => {
         Swal.fire({
             title: 'Are you sure?',
@@ -119,8 +132,10 @@ const EditarCliente = () => {
                         'User updated',
                         'success'
                     ).then((result) => {
-                        if (result.isConfirmed) 
+                        if (result.isConfirmed) {
                             router.push('/');
+
+                        }
                     });
         
                     
@@ -131,6 +146,8 @@ const EditarCliente = () => {
             }
           });
     }
+
+   
 
     return (
         <Layout>
@@ -278,5 +295,7 @@ const EditarCliente = () => {
         </Layout>
     ) 
 }
+
+
 
 export default EditarCliente

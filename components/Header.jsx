@@ -15,8 +15,8 @@ query obtenerUsuario{
 `;
 
 const Header = () => {
-
     const {data, loading} = useQuery(GET_USUARIO);
+
     
     const router = useRouter();
     
